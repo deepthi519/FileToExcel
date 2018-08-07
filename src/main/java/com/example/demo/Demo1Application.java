@@ -24,7 +24,11 @@ import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
+/**
+ * 
+ * @author Deepthi grandhi
+ *
+ */
 @SpringBootApplication
 public class Demo1Application {
 
@@ -57,7 +61,6 @@ public class Demo1Application {
         if(length==13)
         {                       
         StringBuilder str = new StringBuilder(inputValue);
-        System.out.println(str.substring(1));
         BigInteger  enteredId = new BigInteger(str.substring(1));          
                 
         System.out.println("Enter number of iterations: ");      
@@ -100,12 +103,12 @@ public class Demo1Application {
                     
                     if(line.contains(inputValue)) {
                     	count++; 
-                    		if((line.contains("error")) || count!=enteredcount ) {               
+                    		if((line.contains("error")) || count!=enteredcount )                
                         		status = "fail";
-                        	//	System.out.println(count);  
-                    			}
+                    			
                     		else 
-                        		status ="success";                  	                   
+                        		status ="success";  
+                    		
                     	Pattern pattern = Pattern.compile("<(.*?)>");
                     	Matcher matcher = pattern.matcher(line);
                     	parts = line.split(": "); 
@@ -132,19 +135,14 @@ public class Demo1Application {
                  styleRed.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
                  styleRed.setFillForegroundColor(IndexedColors.RED.index);
                  
-         	             	    
-                 if(status=="success")
-                 {
-                	 HSSFCell cell = firstRow.createCell(2); 
-                	 cell.setCellValue(status);
-                	 cell.setCellStyle(styleGreen);
-                 }
-                 else
-                 {
-                	 HSSFCell cell = firstRow.createCell(2);
-                	 cell.setCellValue(status);
-                	 cell.setCellStyle(styleRed);
-                 }                                
+         	       
+                 HSSFCell cell = firstRow.createCell(2); 
+            	 cell.setCellValue(status);
+            	 
+                 if(status=="success")                                	 
+                	 cell.setCellStyle(styleGreen);                 
+                 else               
+               	     cell.setCellStyle(styleRed);                                              
                  
                  currentIteration++;
                  enteredId = enteredId.add(BigInteger.ONE);
@@ -156,12 +154,12 @@ public class Demo1Application {
                  String msg = iterator.next();
                  firstRow.createCell(3).setCellValue(msg);
                  
-                 for(int i=1;i<msgList.size();i++) {
+                 for(int i=1;i<msgList.size();i++) 
+                 {
                 	 msg = iterator.next();
                 	 System.out.println(msg);
                 	 HSSFRow row = sheet.createRow((short) ++rowCount);
-                  		 row.createCell(3).setCellValue(msg);
-                  	
+                     row.createCell(3).setCellValue(msg);                  	
                  }
                  msgList = null;
                  count = 0;
