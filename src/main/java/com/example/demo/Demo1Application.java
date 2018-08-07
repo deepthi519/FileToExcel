@@ -40,17 +40,30 @@ public class Demo1Application {
         String fileName = "xmldebugger.log";
         String line = null;
         int count = 0;
-        String inputValue = ">1531121083199";
+       
         int rowCount = 0;
         
         String[] parts = null; 
         int currentIteration = 0;
+        
+        System.out.println("Enter callid ");
+        Scanner scanner2 = new Scanner(System.in);
+        String inputValue = scanner2.nextLine(); 
+        int length = inputValue.length( );
+        System.out.println("length of id is  "+length);
+       // System.out.println("entered callid is" + inputValue);
+        inputValue=">"+inputValue;
+        
+        if(length==13)
+        {                       
         StringBuilder str = new StringBuilder(inputValue);
         System.out.println(str.substring(1));
-        BigInteger  enteredId = new BigInteger(str.substring(1));
-        System.out.println("Enter number of iterations: ");
-        Scanner scanner = new Scanner(System.in);
+        BigInteger  enteredId = new BigInteger(str.substring(1));          
+                
+        System.out.println("Enter number of iterations: ");      
+        Scanner scanner = new Scanner(System.in);        
         int iterations = scanner.nextInt();
+        
         System.out.println("Enter count of the input value you need : ");
         Scanner scanner1 = new Scanner(System.in);
         int enteredcount = scanner1.nextInt();
@@ -73,8 +86,8 @@ public class Demo1Application {
             
 
             HSSFRow rowhead = sheet.createRow((short)rowCount);
-            rowhead.createCell(0).setCellValue("phrase");
-            rowhead.createCell(1).setCellValue("count");
+            rowhead.createCell(0).setCellValue("call id");
+            rowhead.createCell(1).setCellValue("count of callid in log");
             rowhead.createCell(3).setCellValue("Message");
             rowhead.createCell(2).setCellValue("Status");
             while(currentIteration < iterations){
@@ -102,7 +115,7 @@ public class Demo1Application {
             	
             	
             	 HSSFRow firstRow = sheet.createRow((short) ++rowCount);
-                 firstRow.createCell(0).setCellValue(inputValue);
+                 firstRow.createCell(0).setCellValue(str.substring(1));
                  firstRow.createCell(1).setCellValue(count);
                  //firstRow.createCell(3).setCellValue(parts[1]); //printing count instead of message as getting many messages
                 
@@ -120,7 +133,7 @@ public class Demo1Application {
                  styleRed.setFillForegroundColor(IndexedColors.RED.index);
                  
          	             	    
-                 if(status=="sucess")
+                 if(status=="success")
                  {
                 	 HSSFCell cell = firstRow.createCell(2); 
                 	 cell.setCellValue(status);
@@ -161,10 +174,10 @@ public class Demo1Application {
             fileOut.close();
             //workbook.clone();
             
-            System.out.println("Your excel file has been generated!");
-            
+            System.out.println("Your excel file has been generated!");                    
             bufferedReader.close();         
         }
+        
         catch(FileNotFoundException ex) {
             System.out.println(ex);                
         }
@@ -174,6 +187,12 @@ public class Demo1Application {
         catch (Exception ex) {
         	System.out.println("cant create more than 256 columns or something went wrong"+ ex);
         }
+        }
+        else {
+        	System.out.println("invalid call id - expected callid length should be 13");  
+        	searchForName();
+             }
+        
     }
 
 	private static HSSFCell cell(int i) {
